@@ -1,4 +1,3 @@
-// Define an array of products
 const products = [
     {
         id: 1,
@@ -42,6 +41,7 @@ const products = [
         price: 19.99,
         discount: 0
     },
+
     // Add more products here
 ];
 

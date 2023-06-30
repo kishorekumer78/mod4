@@ -1,6 +1,6 @@
 import {addToCart} from "./cart.js";
 
-const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", price: 0}) => {
+const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", price: 0, discount: 0}) => {
     const card = document.createElement("div");
     card.classList.add("card", "shadow", "mb-3");
     card.style.width = "200px"
@@ -22,7 +22,16 @@ const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", pr
 
     const priceText = document.createElement("p");
     priceText.innerHTML = `Price: $ ${element.price}`;
-    priceText.classList.add("card-text");
+    priceText.classList.add("card-text", "mb-0");
+
+    const discountText = document.createElement("p");
+    discountText.classList.add("card-text");
+    if (element.discount > 0) {
+        discountText.innerHTML = `Discount : ${element.discount}%`;
+    } else {
+        discountText.innerHTML = "Discount: N/A ";
+    }
+
 
     const btn = document.createElement("button");
     btn.classList.add("btn", "btn-outline-success")
@@ -38,6 +47,7 @@ const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", pr
     //card body
     cardBody.appendChild(productTitle);
     cardBody.appendChild(priceText);
+    cardBody.appendChild(discountText);
     cardBody.appendChild(textEnd);
     //card
     card.appendChild(image);
