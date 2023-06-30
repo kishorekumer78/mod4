@@ -110,7 +110,7 @@ const calculateGrossTotal = () => {
     } else {
         document.getElementById("grossTotal").innerHTML = `Gross Total : ${grossTotal}`;
         document.getElementById("discount").innerHTML = `Total Discount : ${totalDiscount}`;
-        document.getElementById("payable").innerHTML = `Total Payable : ${parseFloat((grossTotal-totalDiscount).toFixed(2))}`; //TODO: use Math.round() to get to nearest integer
+        document.getElementById("payable").innerHTML = `Total Payable : ${parseFloat((grossTotal - totalDiscount).toFixed(2))}`; //TODO: use Math.round() to get to nearest integer
         document.getElementById("payable").classList.add("text-decoration-underline")
 
     }
@@ -150,14 +150,14 @@ export const clearCart = () => {
     cart = [];
 }
 
-const calculateTotalDiscount =()=>{
+const calculateTotalDiscount = () => {
     let discount = 0;
-    cart.forEach((el)=> {
-        if(el.discount > 0){
-            let individualDiscount = parseFloat(((el.discount/100)*el.totalPrice).toFixed(2));
+    cart.forEach((el) => {
+        if (el.discount > 0) {
+            let individualDiscount = (el.discount / 100) * el.totalPrice;
             discount += individualDiscount;
         }
     })
-    return discount;
+    return parseFloat(discount.toFixed(2));
 }
 
