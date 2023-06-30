@@ -4,16 +4,14 @@ let cart = [];
 
 
 export const addToCart = (id = 0) => {
-
-
     let product = products.find((p) => p.id === id);
     if (product) {
         let cartProduct = cart.find((x) => x.id === product.id)
         if (cartProduct) {
-            // already present add the quantity
+            // product already present. add the quantity & change total price
             let index = cart.findIndex((item) => item.id === cartProduct.id);
             if (index > -1) {
-                cart[index].qty = cart[index]?.qty + 1;
+                cart[index].qty = cart[index].qty + 1;
                 cart[index].totalPrice = parseFloat((cart[index].qty * cart[index].price).toFixed(2));
                 // refresh the table
                 refreshTable();
@@ -23,11 +21,9 @@ export const addToCart = (id = 0) => {
             //add the product to cart
             let qty = 1;
             let totalPrice = parseFloat((qty * product.price).toFixed(2));
-            console.log({...product, qty, totalPrice});
             cart.push({...product, qty, totalPrice});
             //append the row at last
             let row = createRow({...product, qty, totalPrice});
-
             document.getElementById("tbody").appendChild(row);
             // calculate sum of totalPrice
             calculateGrossTotal();
@@ -44,7 +40,7 @@ const createRow = (product) => {
     const qtyCell = document.createElement("td");
     const qtyTxt = document.createElement("span");
     qtyTxt.innerHTML = product.qty;
-    const addBtn = document.createElement("button")
+    // const addBtn = document.createElement("button")
     const priceCell = document.createElement("td");
     const totalPriCell = document.createElement("td");
     const actionCell = document.createElement("td");
@@ -106,10 +102,17 @@ const calculateGrossTotal = () => {
         grossTotal = grossTotal + item.totalPrice;
     });
     grossTotal = parseFloat(grossTotal.toFixed(2));
-    if (grossTotal == 0) {
+    let totalDiscount = calculateTotalDiscount();
+    if (grossTotal === 0) {
         document.getElementById("grossTotal").innerHTML = "";
+        document.getElementById("discount").innerHTML = "";
+        document.getElementById("payable").innerHTML = "";
     } else {
         document.getElementById("grossTotal").innerHTML = `Gross Total : ${grossTotal}`;
+        document.getElementById("discount").innerHTML = `Total Discount : ${totalDiscount}`;
+        document.getElementById("payable").innerHTML = `Total Payable : ${parseFloat((grossTotal-totalDiscount).toFixed(2))}`; //TODO: use Math.round() to get to nearest integer
+        document.getElementById("payable").classList.add("text-decoration-underline")
+
     }
 }
 
@@ -142,7 +145,19 @@ const createReduceButton = (id) => {
 export const clearCart = () => {
     document.getElementById("tbody").innerHTML = "";
     document.getElementById("grossTotal").innerHTML = "";
+    document.getElementById("discount").innerHTML = "";
+    document.getElementById("payable").innerHTML = "";
     cart = [];
 }
 
+const calculateTotalDiscount =()=>{
+    let discount = 0;
+    cart.forEach((el)=> {
+        if(el.discount > 0){
+            let individualDiscount = parseFloat(((el.discount/100)*el.totalPrice).toFixed(2));
+            discount += individualDiscount;
+        }
+    })
+    return discount;
+}
 
