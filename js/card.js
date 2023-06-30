@@ -34,7 +34,7 @@ const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", pr
 
 
     const btn = document.createElement("button");
-    btn.classList.add("btn", "btn-outline-success")
+    btn.classList.add("btn", "btn-outline-success", "w-100")
     btn.innerHTML = "ADD TO CART";
     //TODO: add event listener
     btn.addEventListener("click", () => {
