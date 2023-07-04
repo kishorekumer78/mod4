@@ -1,3 +1,4 @@
+"use strict";
 const products = [
     {
         id: 1,

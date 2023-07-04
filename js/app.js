@@ -1,3 +1,5 @@
+"use strict";
+
 import products from "./product.js";
 import {clearCart} from "./cart.js";
 import {createProductCard} from "./card.js";

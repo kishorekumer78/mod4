@@ -1,3 +1,4 @@
+"use strict";
 import {addToCart} from "./cart.js";
 
 const createCard = (element = {id: 0, name: "Not Available", image: "na.jpg", price: 0, discount: 0}) => {
